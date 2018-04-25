@@ -1,0 +1,45 @@
+# This code is only for R
+# install.packages("Rdice")
+
+library(Rdice)
+
+faces <- 2
+dice  <- 1
+rolls <- 100
+
+# face = faces of dice
+# dice = how many dice should be rolled at once
+# roll = roll how many times
+
+resultofdice = dice.roll(faces, dice, rolls)
+               # for this function has already set weight = 1/N
+COUNT  <- unlist(resultofdice[1], use.names = F)
+
+Mean     = mean(COUNT)
+  print(Mean)
+Variance = var(COUNT)
+  print(Variance)
+Standard = sd(COUNT)
+  print(Standard)
+
+# prediction part
+PREMean = (1+faces)/faces    # 期望值
+  print(PREMean)
+
+NFV <- 1:faces
+NFS <- (NFV-PREMean)^2
+PREVar  = sum(NFS)/(rolls-1)
+  print(PREVar)
+PREsd   = (PREVar)^(1/2)
+  print(PREsd)
+ 
+ 
+# for probability distribution could use code from assignment 1
+BREAK       <- seq(length=faces+1,from=0,by=1)
+information <- hist(COUNT, BREAK)
+Times       <- information$counts
+Number      <- (information$mids)+0.5
+plot(Number,Times)
+
+Fre <- Times/rolls    # probability distribution
+print(Fre)
